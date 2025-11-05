@@ -35,6 +35,8 @@
       <!-- Récapitulatif panier -->
       <div id="checkout-summary" class="card">
         <h2>Résumé de la commande</h2>
+        <!-- Liste des articles (remplie par js/renderSummary) -->
+        <div id="checkout-items" aria-live="polite"></div>
         <p>Sous-total: <strong id="co-subtotal">$0</strong></p>
         <p>Livraison: <strong id="co-delivery">$0</strong></p>
         <p>Total: <strong id="co-total">$0</strong></p>
@@ -42,7 +44,12 @@
       </div>
 
       <!-- Formulaire -->
-      <form id="checkout-form" class="card" action="#" method="POST">
+      <form id="checkout-form" class="card" action="https://formspree.io/f/mleyewlj" method="POST">
+        <input type="hidden" name="_next" value="merci.html">
+        <!-- Champs cachés pris en charge par le script (sécurisent l'accès côté JS) -->
+        <input type="hidden" id="delivery-date-short" name="delivery_date_short" value="">
+        <input type="hidden" id="delivery-date" name="delivery_date" value="">
+        <input type="hidden" id="delivery-time" name="delivery_time" value="">
         <h2>Informations personnelles</h2>
         <label>Nom complet
           <input type="text" name="name" required>
