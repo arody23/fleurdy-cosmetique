@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('checkout-form');
+    if (!form) {
+        console.warn('checkout.page.js: form with id "checkout-form" not found — aborting checkout script');
+        return;
+    }
+    // Mode test local: ajouter `?local_test=1` à l'URL pour simuler une soumission sans appeler Formspree
+    const isLocalTest = (typeof window !== 'undefined') && (new URLSearchParams(window.location.search).get('local_test') === '1');
     const cart = JSON.parse(localStorage.getItem('fd_cart')) || [];
 
     // Si le panier est vide, afficher un message convivial au lieu de rediriger
@@ -196,7 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Gestion de la soumission du formulaire
     form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    e.preventDefault();
+    console.info('checkout: submit start', { action: form.action, cartLength: cart.length, isLocalTest });
 
         // Normalize delivery time to 24h before submission
         const timeEl = form.querySelector('[name="delivery_time"]');
@@ -208,34 +215,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const communeVal = (form.commune && form.commune.value) ? form.commune.value : '';
         try { updateDeliveryDisplay(communeVal); } catch (err) { /* ignore */ }
 
+        // Quick validation: required fields
+        if (!form.name || !form.phone || !form.address) {
+            console.warn('checkout: required fields missing on the form element (name/phone/address)');
+        }
+
         // Prépare le résumé de la commande
         const cartSummary = cart.map(item => {
             const product = FD_PRODUCTS.find(p => p.id === item.id);
             return `${product.name} (${item.qty}x) - ${formatPrice(product.price * item.qty)}`;
         }).join('\n');
 
-        // Ajoute le résumé au formulaire
+        // Ajoute le résumé au formulaire (accès sûr aux champs optionnels)
         const orderDetails = document.createElement('input');
         orderDetails.type = 'hidden';
         orderDetails.name = 'message';
-    orderDetails.value = `
-RÉSUMÉ DE LA COMMANDE
 
-${cartSummary}
+        // Helpers pour accéder aux champs qui peuvent ne pas exister
+        const safe = (field) => {
+            try { return field && typeof field.value !== 'undefined' ? field.value : ''; } catch (e) { return ''; }
+        };
+        const getText = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.textContent : '';
+        };
 
-Sous-total: ${document.getElementById('co-subtotal').textContent}
-Livraison: ${document.getElementById('co-delivery').textContent}
-TOTAL: ${document.getElementById('co-total').textContent}
+        const deliveryDateShort = (document.getElementById('delivery-date-short') && typeof document.getElementById('delivery-date-short').value !== 'undefined') ? document.getElementById('delivery-date-short').value : '';
 
-Informations client :
-Nom: ${form.name.value}
-Téléphone: ${form.phone.value}
-Date de livraison: ${form.delivery_date.value}
-Date (jour+mois): ${document.getElementById('delivery-date-short') ? document.getElementById('delivery-date-short').value : ''}
-Heure de livraison: ${form.delivery_time.value}
-Adresse: ${form.address.value}
-Commune: ${form.commune.value}
-`;
+        orderDetails.value = `\nRÉSUMÉ DE LA COMMANDE\n\n${cartSummary}\n\nSous-total: ${getText('co-subtotal')}\nLivraison: ${getText('co-delivery')}\nTOTAL: ${getText('co-total')}\n\nInformations client :\nNom: ${safe(form.name)}\nTéléphone: ${safe(form.phone)}\nDate de livraison: ${safe(form.delivery_date)}\nDate (jour+mois): ${deliveryDateShort}\nHeure de livraison: ${safe(form.delivery_time)}\nAdresse: ${safe(form.address)}\nCommune: ${safe(form.commune)}\n`;
         form.appendChild(orderDetails);
 
         // Soumet le formulaire via AJAX pour forcer la redirection vers notre page de remerciement
@@ -243,30 +250,64 @@ Commune: ${form.commune.value}
         if (submitBtn) submitBtn.disabled = true;
 
         const fd = new FormData(form);
+        // Si on est en mode test local, simuler une réponse réussie sans réseau
+        if (isLocalTest) {
+            console.info('Local test mode: simulating successful submission');
+            setTimeout(() => {
+                // Vider le panier et rediriger comme si la soumission avait réussi
+                localStorage.removeItem('fd_cart');
+                const next = form.querySelector('input[name="_next"]') ? form.querySelector('input[name="_next"]').value : 'merci.html';
+                // réactiver le bouton juste avant la redirection (pour UX)
+                if (submitBtn) submitBtn.disabled = false;
+                window.location.href = next;
+            }, 400);
+            return;
+        }
 
+        console.info('checkout: sending fetch to', form.action);
         fetch(form.action, {
             method: 'POST',
             body: fd,
             headers: { 'Accept': 'application/json' }
         }).then(response => {
             if (response.ok) {
-                // rediriger vers la page de remerciement locale (utilise _next si présent)
-                const next = form.querySelector('input[name="_next"]') ? form.querySelector('input[name="_next"]').value : '/merci.html';
+                // rediriger vers la page de remerciement
+                const next = form.querySelector('input[name="_next"]') ? form.querySelector('input[name="_next"]').value : 'merci.html';
+                // Vider le panier avant la redirection
+                localStorage.removeItem('fd_cart');
                 window.location.href = next;
             } else {
+                console.warn('checkout: fetch returned non-ok status', response.status);
+                // Si la réponse n'est pas OK, tenter de récupérer le JSON pour debug,
+                // puis utiliser une soumission native comme fallback (cela permettra
+                // à Formspree de traiter la redirection `_next` côté serveur).
                 return response.json().then(data => {
                     console.error('Formspree error', data);
-                    alert("Erreur lors de l'envoi de la commande. Veuillez réessayer.");
+                }).catch(() => {
+                    console.error('Formspree returned non-OK status and body could not be parsed');
+                }).finally(() => {
+                    // fallback: soumission native (ne déclenche pas l'événement submit)
                     if (submitBtn) submitBtn.disabled = false;
+                    try { form.submit(); } catch (err) { console.error('Fallback form.submit failed', err); }
                 });
             }
         }).catch(err => {
             console.error('Network error while sending order', err);
-            alert("Problème réseau — impossible d'envoyer la commande pour le moment.");
+            // En cas d'erreur réseau (CORS, file://, offline...), tenter une soumission
+            // native comme fallback pour que la redirection `_next` fonctionne.
             if (submitBtn) submitBtn.disabled = false;
+            try { form.submit(); } catch (err2) {
+                console.error('Fallback native submit failed', err2);
+                alert("Problème réseau — impossible d'envoyer la commande pour le moment.");
+            }
         });
     });
 
-    // Initialise l'affichage
-    renderSummary();
+    // Initialise l'affichage (protéger contre erreurs dans renderSummary)
+    try {
+        renderSummary();
+    } catch (err) {
+        console.error('Error rendering checkout summary:', err);
+        // Ne pas interrompre la logique de soumission si le rendu échoue
+    }
 });
