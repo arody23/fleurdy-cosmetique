@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,42 +9,71 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta name="theme-color" content="#fff">
   <style>
+    :root{ --container-padding:16px }
+    html,body{ height:100%; margin:0; font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color:var(--text,#222); background:var(--bg,#fff)}
+    .container{ padding:0 var(--container-padding); max-width:1100px; margin:0 auto }
     .success-page {
       text-align: center;
-      padding: 60px 20px;
-      max-width: 600px;
-      margin: 0 auto;
+      padding: 42px 18px;
+      max-width: 720px;
+      width: 100%;
+      margin: 18px auto;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      animation: fadeIn 0.48s ease;
     }
-    .success-icon {
-      font-size: 64px;
-      margin-bottom: 20px;
+
+    .success-icon{
+      width:88px;height:88px;margin:0 auto 18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent,#e4547f),#ff6b98);color:#fff;font-size:44px;box-shadow:0 6px 20px rgba(228,86,127,0.2)
     }
-    .success-title {
-      color: var(--accent);
-      margin-bottom: 20px;
+
+    .success-title{ color:var(--accent,#e4547f); margin:8px 0 8px; font-size:1.9rem; line-height:1.15; font-weight:700 }
+    .success-text{ color:var(--text,#333); margin:10px 0 16px; font-size:1rem; line-height:1.5 }
+
+    .btn-primary{ display:inline-block; padding:14px 22px; background:var(--accent,#e4547f); color:#fff; border-radius:12px; text-decoration:none; font-weight:600; border:none; cursor:pointer }
+    .btn-primary.full { display:block; width:100%; box-sizing:border-box }
+
+    /* Floating whatsapp button */
+    .whatsapp-float{ position:fixed; right:18px; bottom:18px; background:#25D366; color:#fff; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.15); z-index:60 }
+    .whatsapp-float i{ font-size:22px }
+
+    @media (max-width: 480px){
+      :root{ --container-padding:12px }
+      .success-page{ padding:28px 14px; margin:12px; border-radius:12px }
+      .success-icon{ width:72px;height:72px;font-size:36px }
+      .success-title{ font-size:1.6rem }
+      .success-text{ font-size:0.98rem }
+      .btn-primary{ padding:14px; font-size:1rem }
+      .btn-primary.full{ padding:16px }
+      .footer-bottom small{ font-size:12px }
     }
-    .success-text {
-      color: var(--text);
-      margin-bottom: 30px;
-    }
+
+    @keyframes fadeIn{ from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <div class="container" style="display:flex;align-items:center;justify-content:flex-start;">
-      <a href="index.html" class="brand">
-        <img src="assets/images/logo.png" alt="Fleurdy Cosmétique" style="height:48px;width:auto;">
-      </a>
+    <div class="container">
+      <div class="header-left">
+        <a href="index.html" class="brand">
+          <img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="logo" style="height: 50px; width: auto;">
+        </a>
+      </div>
     </div>
   </header>
 
   <main class="section">
     <div class="container">
       <div class="success-page">
-        <div class="success-icon">✨</div>
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
         <h1 class="success-title">Merci pour votre commande !</h1>
         <p class="success-text">
           Votre commande a été enregistrée avec succès. Nous vous contacterons bientôt sur WhatsApp pour confirmer la livraison.
@@ -67,7 +97,6 @@
         <h4>Liens utiles</h4>
         <ul>
           <li><a href="catalog.html">Boutique</a></li>
-          <li><a href="commande.html">Commander</a></li>
           <li><a href="about.html">À propos</a></li>
         </ul>
       </div>
