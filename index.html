@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fleurdy Cosmétique — Accueil</title>
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <style>
+    /* Styles du header et du panier */
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 50px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .site-header {
+      padding: 15px 0;
+      background: white;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+      .site-header .container {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+      }
+      
+      .header-left {
+        justify-content: center;
+        grid-column: 2;
+      }
+      
+      .nav {
+        grid-column: 3;
+        justify-content: flex-end;
+      }
+      
+      #menu-toggle {
+        grid-column: 1;
+        order: -1;
+      }
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      color: var(--text);
+      cursor: pointer;
+      padding: 12px;
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+      margin-left: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+    }
+
+    .menu-icon:hover {
+      background-color: rgba(var(--accent-rgb), 0.1);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cart-icon {
+      font-size: 24px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Styles responsives */
+    @media (max-width: 768px) {
+      .logo {
+        height: 40px;
+      }
+
+      .menu-icon, .cart-icon {
+        font-size: 22px;
+        width: 44px;
+        height: 44px;
+        padding: 10px;
+      }
+
+      .site-header {
+        padding: 12px 0;
+      }
+
+      .container {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        height: 35px;
+      }
+
+      .menu-icon, .cart-icon {
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+      }
+
+      .nav {
+        gap: 8px;
+      }
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100vh;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      transition: left 0.3s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .mobile-menu.active {
+      left: 0;
+    }
+
+    .mobile-menu .close-menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .mobile-menu .menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 60px;
+    }
+
+    .mobile-menu .menu-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .mobile-menu .menu-links a:hover {
+      background-color: rgba(var(--accent-rgb), 0.1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .cart-icon {
+      position: relative;
+      font-size: 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+
+    .cart-icon:hover {
+      background: rgba(var(--accent-rgb), 0.1);
+      transform: scale(1.1);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      transform: translate(25%, -25%);
+    }
+
+    /* Animations et effets */
+    .card {
+      transition: all 0.3s ease !important;
+      transform: translateY(0);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .product-card img {
+      transition: transform 0.5s ease;
+    }
+    
+    .product-card:hover img {
+      transform: scale(1.05);
+    }
+    
+    .btn-primary, .btn-secondary {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover, .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .hero, .section {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    .product-card {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: calc(var(--card-index, 0) * 0.1s);
+    }
+    
+    .site-footer {
+      background: linear-gradient(180deg, 
+        rgba(185, 59, 99, 0.05) 0%,
+        rgba(185, 59, 99, 0.1) 100%);
+      transition: all 0.3s ease;
+    }
+
+    .hero-copy h1 {
+      font-family: 'Bricolage Grotesque', serif;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+    .hero-copy p {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: white;
+    }
+    .hero-copy ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+    }
+    .hero-copy ul li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+    .hero-copy ul li i {
+      font-size: 18px;
+      color: var(--accent);
+    }
+    /* Force transparent backgrounds inside hero to avoid white boxes on mobile */
+    .hero, .hero .container, .hero .hero-copy, .hero .hero-copy * {
+      background: transparent !important;
+    }
+    /* Mobile-first improvements: make hero and sections readable on small screens */
+    @media (max-width: 768px) {
+      .hero { padding: 28px 12px; }
+      .hero .container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 36px 12px; }
+      .hero-copy { width: 100%; max-width: 520px; padding: 0 6px; text-align: center; }
+      .hero-copy h1 { font-size: 2.1rem !important; line-height: 1.25 !important; margin-bottom: 1rem !important; }
+      .hero-copy p { font-size: 1rem !important; margin-bottom: 1rem !important; }
+      .hero-copy ul { flex-direction: column; gap: 10px; align-items: center; }
+      .hero-copy ul li { font-size: 0.95rem; }
+      .hero-btn { width: 100%; box-sizing: border-box; padding: 12px 16px !important; font-size: 16px !important; }
+      .cards-grid { gap: 12px; }
+      .cards-grid .card .product-visual img { height: 180px; }
+      .container { padding-left: 16px; padding-right: 16px; }
+      .header-left .logo { height: 44px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero .container { padding: 24px 10px; }
+      .hero-copy h1 { font-size: 1.8rem !important; }
+      .hero-copy p { font-size: 0.95rem !important; }
+      .hero-btn { padding: 10px 12px !important; font-size: 15px !important; }
+      .product-card img { height: 160px; }
+      .feature .icon { width:48px; height:48px; }
+      .mobile-menu { width: 260px; }
+      .menu-icon, .cart-icon, .header-cart { width:40px; height:40px; }
+      /* Ensure text wraps and doesn't overflow */
+      h1, h2, h3, p { word-break: break-word; overflow-wrap: break-word; }
+    }
+  </style>
+  <link rel="stylesheet" href="css/animations.css" />
+  <!-- Google Fonts: Bricolage Grotesque for headings, Poppins for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <i class="fas fa-bars menu-icon" id="menu-toggle"></i>
+      <div class="header-left">
+        <a href="index.html" class="brand">
+          <img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="logo" style="height: 50px; width: auto;">
+        </a>
+      </div>
+      <nav class="nav">
+        <a href="cart.html" class="header-cart" aria-label="Panier">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Menu mobile -->
+  <div class="mobile-menu" id="mobile-menu">
+    <i class="fas fa-times close-menu" id="close-menu"></i>
+    <div class="menu-links">
+      <a href="catalog.html">Boutique</a>
+      <a href="about.html">À propos</a>
+      <a href="commande.html">Commander</a>
+    </div>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Ajout de Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-banner" aria-hidden="true"></div>
+    <div class="container" style="display:flex;align-items:center;justify-content:center;padding:60px 0;">
+      <div class="hero-copy">
+        <h1>Révélez l’éclat de votre peau</h1>
+        <p>Fleurdy Cosmétique – L’expertise dermatologique au service de votre beauté</p>
+    <a href="catalog.html" class="btn-primary hero-btn">Découvrir nos gammes</a>
+        <ul>
+          <li><i class="fas fa-sun"></i> Éclat durable</li>
+          <li><i class="fas fa-shield-alt"></i> Expertise dermatologique</li>
+          <li><i class="fas fa-gem"></i> Élégance & confiance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Routines, Gammes premium, Duo, Produits populaires -->
+  <section class="section">
+    <div class="container">
+      <h2>Nos routines complètes</h2>
+      <div class="cards-grid" id="routines-grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Gammes haut de gamme</h2>
+      <div class="cards-grid" id="expensive-grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Nos duos</h2>
+      <div class="cards-grid" id="duo-grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Produits populaires</h2>
+      <div class="cards-grid" id="popular-grid"></div>
+    </div>
+  </section>
+
+  <!-- Trust & Features + Newsletter -->
+  <section class="section site-trust">
+    <div class="container">
+      <h2 class="section-title">Ils nous font confiance</h2>
+
+      <div class="testimonials">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>"La routine Heartleaf a transformé ma peau sensible ! Enfin des produits qui apaisent vraiment."</blockquote>
+          <div class="author">Chantal, Gombe</div>
+        </div>
+
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Livraison rapide et produits conformes à la description. Le paiement à la livraison est très rassurant."</blockquote>
+          <div class="author">Marie, Limete</div>
+        </div>
+
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Les produits font des merveilles sur ma peau. Service client très professionnel et réactif !"</blockquote>
+          <div class="author">Sarah, Ngaliema</div>
+        </div>
+      </div>
+
+      <div class="why-choose">
+        <h3>Pourquoi Choisir Fleurdy ?</h3>
+        <div class="features">
+          <div class="feature">
+            <div class="icon"><i class="fas fa-shipping-fast" aria-hidden="true"></i></div>
+            <div class="text"><strong>Livraison Offerte</strong><div class="muted">Dès 100$ d'achat</div></div>
+          </div>
+          <div class="feature">
+            <div class="icon"><i class="fas fa-wallet" aria-hidden="true"></i></div>
+            <div class="text"><strong>Paiement à la Livraison</strong><div class="muted">Seulement si satisfait</div></div>
+          </div>
+          <div class="feature">
+            <div class="icon"><i class="fas fa-user-md" aria-hidden="true"></i></div>
+            <div class="text"><strong>Produits Dermatologiques</strong><div class="muted">Approuvés par les experts</div></div>
+          </div>
+          <div class="feature">
+            <div class="icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
+            <div class="text"><strong>Livraison Kinshasa</strong><div class="muted">Dans toutes les communes</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="newsletter card">
+        <h3>Restez Informés</h3>
+        <p>Recevez nos offres exclusives et conseils beauté directement dans votre boîte email</p>
+        <form id="newsletter-form" class="newsletter-form">
+          <label for="newsletter-email" class="visually-hidden">Votre adresse email</label>
+          <input id="newsletter-email" name="email" type="email" placeholder="Votre adresse email" required>
+          <button type="submit" class="btn-primary">S'ABONNER</button>
+        </form>
+        <div id="newsletter-result" class="muted" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html"><img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="footer-logo"></a>
+        <p class="footer-desc">Soins premium pour peaux sensibles — Kinshasa, RDC</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a href="catalog.html">Boutique</a></li>
+          <li><a href="commande.html">Commander</a></li>
+          <li><a href="about.html">À propos</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>WhatsApp: <a href="https://wa.me/243853875468" target="_blank">+243 853 875 468</a></p>
+        <div class="social">
+          <a href="https://www.instagram.com/fleurdy_cosmetique?igsh=ZG5wbGp3djFvaWQ4" target="_blank" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61583227495978" target="_blank" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <small>© 2025 Fleurdy Cosmétique. Tous droits réservés.</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/243853875468" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Scripts -->
+  <script src="js/data.products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/mobile-effects.js"></script>
+  <script src="js/home.page.js"></script>
+  <script>
+    // Menu mobile functionality
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+    const overlay = document.getElementById('overlay');
+
+    function openMenu() {
+      mobileMenu.classList.add('active');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenuFn() {
+      mobileMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openMenu);
+    closeMenu.addEventListener('click', closeMenuFn);
+    overlay.addEventListener('click', closeMenuFn);
+  </script>
+</body>
+</html>

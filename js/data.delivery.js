@@ -1,0 +1,27 @@
+// Frais de livraison par commune (Kinshasa)
+window.FD_DELIVERY = {
+    'Gombe': 5,
+    'Lingwala': 5,
+    'Barumbu': 5,
+    'Kinshasa': 5,
+    'Kintambo': 7,
+    'Ngaliema': 7,
+    'Mont-Ngafula': 10,
+    'Selembao': 8,
+    'Bandalungwa': 7,
+    'Kasa-Vubu': 7,
+    'Kalamu': 7,
+    'Lemba': 8,
+    'Limete': 8,
+    'Matete': 8,
+    'Ngiri-Ngiri': 7,
+    'Makala': 8,
+    'Bumbu': 8,
+    'Ngaba': 8,
+    'Kisenso': 10,
+    'Masina': 10,
+    'Ndjili': 10,
+    'Kimbanseke': 12,
+    'Maluku': 15,
+    'Nsele': 15
+};

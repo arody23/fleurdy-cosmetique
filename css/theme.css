@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Lato:wght@400;700&display=swap');
+
+:root {
+  /* Light theme for better readability on white background */
+  --bg: #ffffff; /* page background */
+  --surface: #ffffff; /* card backgrounds */
+  --text: #111827; /* dark text */
+  --muted: #6b7280; /* muted gray */
+  --accent: #b93b63; /* warm rose (brand) */
+  --accent-2: #2f855a; /* green accent */
+  --accent-rgb: 185, 59, 99; /* RGB values for animations */
+  --border: #e6e6e9;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(16,24,40,0.06);
+  --shadow-hover: 0 12px 32px rgba(16,24,40,0.12);
+  --font-serif: 'Bricolage Grotesque', 'Cormorant Garamond', serif;
+  --font-sans: 'Poppins', 'Lato', sans-serif;
+  --line-height-title: 1.2;
+  --line-height-body: 1.8;
+  --footer-icon-size: 22px;
+  
+  /* Animation timing */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Global typography settings */
+html, body {
+  font-family: var(--font-sans);
+  line-height: var(--line-height-body);
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Headings use the serif / display font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  line-height: var(--line-height-title);
+  color: var(--text);
+}
+
+/* Hero specific overrides: white text for contrast on image */
+.hero .hero-copy,
+.hero .hero-copy p,
+.hero .hero-copy ul,
+.hero .hero-copy li {
+  color: #ffffff;
+}
+
+/* Slightly lighter weight for body copy where Poppins is used */
+body { font-weight: 400; }
+
+/* Hero background: blurred image + dark overlay for readable white text */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('../assets/images/hero/hero-1200x500.jpg') center/cover no-repeat;
+  filter: blur(6px) brightness(0.6);
+  transform: scale(1.03);
+  z-index: 0;
+}
+.hero::after {
+  /* subtle dark overlay to improve contrast */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.35));
+  z-index: 1;
+}
+.hero .container { position: relative; z-index: 2; }
+.hero .hero-copy { text-align: center; color: #fff; margin: 0 auto; }
+.hero .hero-copy h1 { font-family: var(--font-serif); color: #fff; margin-bottom: 12px; }
+.hero .hero-copy p { font-family: var(--font-sans); color: #fff; margin-bottom: 18px; }
+.hero .hero-copy ul { justify-content: center; margin-top: 18px; }
+
+/* Responsiveness tweak for hero on small screens */
+@media (max-width: 768px) {
+  .hero { min-height: 420px; padding: 40px 0; }
+  .hero .hero-copy h1 { font-size: 28px; }
+}
+
+/* Make sure headings and body fonts use the intended families everywhere */
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-serif); }
+body, p, a, li, input, button, select, textarea { font-family: var(--font-sans); }

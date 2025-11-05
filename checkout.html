@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Commande — Fleurdy Cosmétique</title>
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-left">
+        <a href="index.html" class="brand">
+          <img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="logo" style="height: 50px; width: auto;">
+        </a>
+      </div>
+      <nav class="nav">
+        <a href="catalog.html">Boutique</a>
+        <a href="cart.html" class="header-cart" aria-label="Panier">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1>Finaliser ma commande</h1>
+
+      <!-- Récapitulatif panier -->
+      <div id="checkout-summary" class="card">
+        <h2>Résumé de la commande</h2>
+        <p>Sous-total: <strong id="co-subtotal">$0</strong></p>
+        <p>Livraison: <strong id="co-delivery">$0</strong></p>
+        <p>Total: <strong id="co-total">$0</strong></p>
+        <textarea id="cart-summary" name="cart_summary" rows="4" style="display:none"></textarea>
+      </div>
+
+      <!-- Formulaire -->
+      <form id="checkout-form" class="card" action="#" method="POST">
+        <h2>Informations personnelles</h2>
+        <label>Nom complet
+          <input type="text" name="name" required>
+        </label>
+        <label>Téléphone (WhatsApp)
+          <input type="tel" name="phone" required>
+        </label>
+        <label>Adresse de livraison
+          <input type="text" name="address" required>
+        </label>
+        <label>Commune
+          <select id="commune" name="commune" required>
+            <option value="">Sélectionner</option>
+            <option>Gombe</option>
+            <option>Ngaliema</option>
+            <option>Kintambo</option>
+            <option>Limete</option>
+            <!-- Ajoutez d'autres communes ici -->
+          </select>
+        </label>
+
+        <h2>Paiement</h2>
+        <p>Paiement à la livraison (Cash / Mobile Money).</p>
+
+        <button type="submit" class="btn-primary">Confirmer ma commande</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html"><img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="footer-logo"></a>
+        <p class="footer-desc">Soins premium pour peaux sensibles — Kinshasa, RDC</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a href="catalog.html">Boutique</a></li>
+          <li><a href="commande.html">Commander</a></li>
+          <li><a href="about.html">À propos</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>WhatsApp: <a href="https://wa.me/243853875468" target="_blank">+243 853 875 468</a></p>
+        <div class="social">
+          <a href="https://www.instagram.com/fleurdy_cosmetique?igsh=ZG5wbGp3djFvaWQ4" target="_blank" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61583227495978" target="_blank" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <small>© 2025 Fleurdy Cosmétique. Tous droits réservés.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.products.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/checkout.page.js"></script>
+</body>
+</html>

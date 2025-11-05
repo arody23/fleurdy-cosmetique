@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Commande confirmée — Fleurdy Cosmétique</title>
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .success-page {
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+    .success-title {
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .success-text {
+      color: var(--text);
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="display:flex;align-items:center;justify-content:flex-start;">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.png" alt="Fleurdy Cosmétique" style="height:48px;width:auto;">
+      </a>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="success-page">
+        <div class="success-icon">✨</div>
+        <h1 class="success-title">Merci pour votre commande !</h1>
+        <p class="success-text">
+          Votre commande a été enregistrée avec succès. Nous vous contacterons bientôt sur WhatsApp pour confirmer la livraison.
+        </p>
+        <p class="success-text">
+          Un récapitulatif de votre commande a été envoyé à notre service client.
+        </p>
+        <a href="catalog.html" class="btn-primary">Retourner à la boutique</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html"><img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="footer-logo"></a>
+        <p class="footer-desc">Soins premium pour peaux sensibles — Kinshasa, RDC</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a href="catalog.html">Boutique</a></li>
+          <li><a href="commande.html">Commander</a></li>
+          <li><a href="about.html">À propos</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>WhatsApp: <a href="https://wa.me/243853875468" target="_blank">+243 853 875 468</a></p>
+        <div class="social">
+          <a href="https://www.instagram.com/fleurdy_cosmetique?igsh=ZG5wbGp3djFvaWQ4" target="_blank" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61583227495978" target="_blank" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <small>© 2025 Fleurdy Cosmétique. Tous droits réservés.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/243853875468" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script>
+    // Vider le panier après une commande réussie
+    document.addEventListener('DOMContentLoaded', () => {
+      localStorage.removeItem('fd_cart');
+    });
+  </script>
+</body>
+</html>

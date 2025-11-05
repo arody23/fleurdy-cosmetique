@@ -1,0 +1,66 @@
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: var(--line-height-body);
+}
+img {
+  max-width: 100%;
+  display: block;
+  border-radius: var(--radius);
+}
+a {
+  text-decoration: none;
+  color: var(--accent);
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.section {
+  padding: 56px 0;
+}
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  margin: 0 0 14px;
+  color: var(--text);
+  line-height: var(--line-height-title);
+}
+p {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+small {
+  color: var(--muted);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--accent);
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.btn-link {
+  color: var(--accent);
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}

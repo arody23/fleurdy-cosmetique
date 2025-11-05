@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panier — Fleurdy Cosmétique</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css" />
+  <style>
+    /* Hide About link in header on mobile for cart page only */
+    @media (max-width: 768px) {
+      .site-header .nav a[href="about.html"] { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-left">
+        <a href="index.html" class="brand">
+          <img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="logo" style="height: 50px; width: auto;">
+        </a>
+      </div>
+      <nav class="nav">
+        <a href="catalog.html">Boutique</a>
+        <a href="about.html">À propos</a>
+        <a href="cart.html" class="header-cart" aria-label="Panier">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <main class="section">
+    <div class="container">
+  <h1>Panier</h1>
+  <!-- Free shipping progress (rendered by js when `#free-shipping` exists) -->
+  <div id="free-shipping"></div>
+  <div id="cart-list"></div>
+      <div class="cart-summary">
+        <p>Sous-total: <strong id="subtotal">$0</strong></p>
+        <a class="btn-primary" href="commande.html">Valider ma commande</a>
+      </div>
+    </div>
+  </main>
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html"><img src="assets/images/logo.png" alt="Fleurdy Cosmétique" class="footer-logo"></a>
+      <p class="footer-desc">Soins premium pour peaux sensibles — Kinshasa, RDC</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Liens utiles</h4>
+      <ul>
+        <li><a href="catalog.html">Boutique</a></li>
+        <li><a href="commande.html">Commander</a></li>
+        <li><a href="about.html">À propos</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>WhatsApp: <a href="https://wa.me/243853875468" target="_blank">+243 853 875 468</a></p>
+      <div class="social">
+        <a href="https://www.instagram.com/fleurdy_cosmetique?igsh=ZG5wbGp3djFvaWQ4" target="_blank" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61583227495978" target="_blank" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <small>© 2025 Fleurdy Cosmétique. Tous droits réservés.</small>
+    </div>
+  </div>
+</footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/243853875468" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+ <script src="js/utils.js"></script>
+<script src="js/data.products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/render.js"></script>
+
+</body>
+</html>
